@@ -10,18 +10,18 @@ public class Person {
 
     public Person(String name, String surname) {
         this.name = name;
-        this.surname = name;
+        this.surname = surname;
     }
 
     public Person(String name, String surname, int age) {
         this.name = name;
-        this.surname = name;
+        this.surname = surname;
         this.age = age;
     }
 
 
     public boolean hasAge() {
-        return age != 0;
+        return (Integer) age != null;
     }
 
     public boolean hasAddress() {
@@ -55,12 +55,12 @@ public class Person {
     }
 
     public PersonBuilder newChildBuilder() {
-        return new PersonBuilder().setSurname(surname).setAddress(address);
+        return new PersonBuilder().setSurname(surname).setAddress(address).setAge(1);
     }
 
     @Override
     public String toString() {
-        return "name - " + name + " surname - " + surname+ " age - " + age + " address - " + address;
+        return "name - " + name + " surname - " + surname + " age - " + age + " address - " + address;
     }
 
     @Override

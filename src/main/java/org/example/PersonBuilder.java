@@ -6,16 +6,11 @@ public class PersonBuilder implements IPersonBuilder {
     private String surname;
     private int age;
     private String address;
-    Person person;
 
 
     public PersonBuilder setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Поле имя пустое");
-        } else {
-            this.name = name;
-            return this;
-        }
+        this.name = name;
+        return this;
     }
 
     public PersonBuilder setSurname(String surname) {
@@ -38,20 +33,25 @@ public class PersonBuilder implements IPersonBuilder {
         } else this.address = address;
         return this;
     }
+
     @Override
     public Person build() {
 
-        if (name == null || surname == null) {
-            throw new IllegalArgumentException("Нету поля \"имя\" или \"фамилия\" ");
+        Person person;
+        if (name == null) {
+            throw new IllegalArgumentException("Поле имя пустое");
         }
-        if (age < 1) {
+        if (surname == null) {
+            throw new IllegalArgumentException("Поле фамилия пустое");
+        }
+
+        if ((Integer) age == null) {
             person = new Person(name, surname);
         } else person = new Person(name, surname, age);
         person.setAddress(address);
         return person;
 
+
     }
-
-
 }
 
