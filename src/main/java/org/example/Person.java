@@ -1,11 +1,12 @@
 package org.example;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 
 public class Person {
     protected final String name;
     protected final String surname;
-    protected int age;
+    protected Integer age;
     protected String address;
 
     public Person(String name, String surname) {
@@ -13,7 +14,7 @@ public class Person {
         this.surname = surname;
     }
 
-    public Person(String name, String surname, int age) {
+    public Person(String name, String surname, Integer age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -21,7 +22,12 @@ public class Person {
 
 
     public boolean hasAge() {
-        return (Integer) age != null;
+
+        if (this.age == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean hasAddress() {
@@ -36,8 +42,12 @@ public class Person {
         return surname;
     }
 
-    public int getAge() {
-        return age;
+    public OptionalInt getAge() {
+        if (OptionalInt.of(this.age).isEmpty()) {
+            return null;
+        } else {
+            return OptionalInt.of(this.age);
+        }
     }
 
     public String getAddress() {
@@ -45,8 +55,8 @@ public class Person {
     }
 
     public void happyBirthday() {
-        if (hasAge()) {
-            age++;
+        if (this.hasAge()) {
+            this.age++;
         }
     }
 
@@ -60,7 +70,12 @@ public class Person {
 
     @Override
     public String toString() {
-        return "name - " + name + " surname - " + surname + " age - " + age + " address - " + address;
+
+        try {
+            return "name - " + name + " surname - " + surname + " age - " + age.intValue() + " address - " + address;
+        } catch (NullPointerException e) {
+            return "name - " + name + " surname - " + surname + " age - неуказан " + address + " + address";
+        }
     }
 
     @Override

@@ -1,10 +1,12 @@
 package org.example;
 
+import java.util.OptionalInt;
+
 public class PersonBuilder implements IPersonBuilder {
 
     private String name;
     private String surname;
-    private int age;
+    private Integer age = null;
     private String address;
 
 
@@ -14,9 +16,7 @@ public class PersonBuilder implements IPersonBuilder {
     }
 
     public PersonBuilder setSurname(String surname) {
-        if (surname == null) {
-            throw new IllegalArgumentException("Поле фамилия пустое");
-        } else this.surname = surname;
+        this.surname = surname;
         return this;
     }
 
@@ -29,25 +29,27 @@ public class PersonBuilder implements IPersonBuilder {
 
     public PersonBuilder setAddress(String address) {
         if (address == null) {
-            throw new IllegalArgumentException("Поле город пустое");
+            throw new IllegalStateException("Поле город пустое");
         } else this.address = address;
         return this;
     }
+
 
     @Override
     public Person build() {
 
         Person person;
-        if (name == null) {
-            throw new IllegalArgumentException("Поле имя пустое");
+        if (this.name == null) {
+            throw new IllegalStateException("Поле имя пустое");
         }
-        if (surname == null) {
-            throw new IllegalArgumentException("Поле фамилия пустое");
+        if (this.surname == null) {
+            throw new IllegalStateException("Поле фамилия пустое");
         }
 
-        if ((Integer) age == null) {
+        if (this.age == null) {
             person = new Person(name, surname);
-        } else person = new Person(name, surname, age);
+
+        } else person = new Person(name, surname, this.age);
         person.setAddress(address);
         return person;
 
